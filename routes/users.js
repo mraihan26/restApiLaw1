@@ -3,6 +3,7 @@ var router = express.Router();
 
 var db = require('../modules/user-db')
 var userDatabase = db.users
+var lastId = 2;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -20,7 +21,7 @@ router.get('/get/:id', (req,res) => {
 
 router.post('/add', (req,res) => {
   const newUser = {
-      id: userDatabase.length+1,
+      id: ++lastId,
       name: req.body.name,
       address: req.body.address,
       dob: req.body.dob,
@@ -62,11 +63,8 @@ router.put('/update-user/:id',(req,res) => {
   var books_user = dataUser.books;
 
   if(req.body.books!=null){
-    console.log("masuk if");
     books_user = dataUser.books.concat(req.body.books);
   }
-
-  console.log(books_user);
 
   const updatedUser = {
       id: dataUser.id,
